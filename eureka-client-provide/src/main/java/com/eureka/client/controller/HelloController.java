@@ -1,13 +1,12 @@
 package com.eureka.client.controller;
 
+import com.eureka.client.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,5 +37,20 @@ public class HelloController {
         });
         //System.out.println("test");
         return "Hello worldf";
+    }
+
+    @RequestMapping(value = "/hello1", method = RequestMethod.GET)
+    public String hello1(@RequestParam String name) {
+        return "hello " + name;
+    }
+
+    @RequestMapping(value = "/hello2", method = RequestMethod.GET)
+    public User hello2(@RequestHeader String name, @RequestHeader Integer age) {
+        return new User(name, age);
+    }
+
+    @RequestMapping(value = "/hello3", method = RequestMethod.POST)
+    public String hello3(@RequestBody User user) {
+        return "hello " + user.getName() + ", " + user.getAge();
     }
 }
